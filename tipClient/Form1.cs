@@ -48,5 +48,61 @@ namespace tipClient
             textBox1.Text = parsat;
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //Adauga
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var client = new RestClient("http://localhost:1234/WebServices/rest/DbAccess/post");
+            var request = new RestRequest("", RestSharp.Method.POST);
+            request.AddParameter("denumire", textBox2.Text);
+            request.AddParameter("pret", textBox3.Text);
+            request.AddParameter("producator", textBox4.Text);
+            var response = client.Execute(request);
+
+            if (response.IsSuccessful)
+                MessageBox.Show("yeees");
+            else
+                MessageBox.Show("nu a mers");
+        }
+
+        //Modifica
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var client = new RestClient("http://localhost:1234/WebServices/rest/DbAccess/put");
+            var request = new RestRequest("", RestSharp.Method.PUT);
+            request.AddParameter("id", textBox5.Text);
+            request.AddParameter("denumire", textBox6.Text);
+            request.AddParameter("pret", textBox7.Text);
+            request.AddParameter("producator", textBox8.Text);
+            var response = client.Execute(request);
+
+            if (response.IsSuccessful)
+                MessageBox.Show("yeees");
+            else
+                MessageBox.Show("nu a mers");
+        }
+
+        private void textBox9_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var client = new RestClient("http://localhost:1234");
+            var request = new RestRequest("/WebServices/rest/DbAccess/delete/4", Method.DELETE);
+            //request.AddParameter("id", 4);
+            var response = client.Execute(request);
+
+            
+            if (response.IsSuccessful)
+                MessageBox.Show("yeees");
+            else
+                MessageBox.Show("maluma baby");
+        }
     }
 }
