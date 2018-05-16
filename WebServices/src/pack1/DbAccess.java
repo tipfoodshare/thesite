@@ -104,4 +104,27 @@ public class DbAccess {
 			return SUCCESS_RESULT;
 		return FAILURE_RESULT;
 	}
+	
+	@DELETE
+	   @Path("/delete/{id}")
+	   @Produces(MediaType.TEXT_PLAIN)
+	   public String deleteUser(@PathParam("id") int id){
+		Integer r = 0;
+	    try {
+	        Class.forName("com.mysql.jdbc.Driver");
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tip","root","");
+	        String sql = "delete from produse where id = " + id;
+	        Statement st = con.createStatement();
+	        r = st.executeUpdate(sql);
+
+			st.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if(r == 1)
+			return SUCCESS_RESULT;
+		return FAILURE_RESULT;
+	   }
 }
