@@ -80,4 +80,28 @@ public class DbAccess {
 			return SUCCESS_RESULT;
 		return FAILURE_RESULT;
    }
+	
+	@PUT
+	@Path("/put")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public String putProduct(@FormParam("id") String id, @FormParam("denumire") String denumire, @FormParam("pret") String pret, @FormParam("producator") String producator, @Context HttpServletResponse servletResponse) throws IOException{
+		Integer r = 0;
+	    try {
+	        Class.forName("com.mysql.jdbc.Driver");
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tip","root","");
+	        String sql = "update produse set denumire = \"" + denumire + "\", pret = " + pret + ", producator = \"" + producator + "\" where id = " + id;
+	        Statement st = con.createStatement();
+	        r = st.executeUpdate(sql);
+
+			st.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(r == 1)
+			return SUCCESS_RESULT;
+		return FAILURE_RESULT;
+	}
 }
